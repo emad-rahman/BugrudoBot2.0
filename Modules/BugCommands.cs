@@ -66,7 +66,7 @@ namespace BugrudoBot.Modules
             {
                 foreach (var bug in bugs)
                 {
-                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} UTC | Reported by: {bug.ReportedBy}``` {bug.Text.StripSpecialCharacters()}\n";
+                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} | Reported by: {bug.ReportedBy}``` {bug.Text.StripSpecialCharacters()}\n";
 
                     if (bugsAsString.Length + str.Length >= EmbedBuilder.MaxDescriptionLength)
                     {
