@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
-namespace BugrudoBot2._0
+namespace BugrudoBot
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        public static Task Main(string[] args)
+            =>  Startup.RunAsync(args);
     }
 }
