@@ -26,14 +26,14 @@ namespace BugrudoBot.Modules
         {
             await Log(msg: new Discord.LogMessage(message: "Starting Bug command", severity: Discord.LogSeverity.Info, source: "bug"));
 
-            var reportedBy = Context.User.Username;
+            var reportedBy = Context.Guild.GetUserAsync(Context.User.Id).Result.Nickname ?? Context.User.Username;
             var reportedOn = DateTime.Now.ToString("yyyy-MM-dd hh:mm");
 
             await Log(msg: new Discord.LogMessage(message: "Creating bug object", severity: Discord.LogSeverity.Info, source: "bug"));
             var bug = new Bug
             {
                 ReportedOn = DateTime.Now,
-                ReportedBy = Context.User.Username,
+                ReportedBy = reportedBy,
                 Text = bugText
             };
 
