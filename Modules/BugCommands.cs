@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Discord;
 using System.Linq;
+using BugrudoBot.Helpers;
 
 namespace BugrudoBot.Modules
 {
@@ -65,7 +66,7 @@ namespace BugrudoBot.Modules
             {
                 foreach (var bug in bugs)
                 {
-                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} UTC | Reported by: {bug.ReportedBy}``` {bug.Text}\n";
+                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} UTC | Reported by: {bug.ReportedBy}``` {bug.Text.StripSpecialCharacters()}\n";
 
                     if (bugsAsString.Length + str.Length >= EmbedBuilder.MaxDescriptionLength)
                     {
