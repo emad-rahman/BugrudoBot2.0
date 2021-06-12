@@ -56,7 +56,7 @@ namespace BugrudoBot.Modules
             await Log(msg: new Discord.LogMessage(message: "Accessing db", severity: Discord.LogSeverity.Info, source: "bugs"));
             var bugs = await _db.Bugs
                 .AsQueryable()
-                .OrderBy(b => b.ReportedOn)
+                .OrderByDescending(b => b.ReportedOn)
                 .ToListAsync();
 
             await Log(msg: new Discord.LogMessage(message: "Merging bugs into log", severity: Discord.LogSeverity.Info, source: "bugs"));
@@ -65,7 +65,7 @@ namespace BugrudoBot.Modules
             {
                 foreach (var bug in bugs)
                 {
-                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} | Reported by: {bug.ReportedBy}``` {bug.Text}\n";
+                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} UTC | Reported by: {bug.ReportedBy}``` {bug.Text}\n";
 
                     if (bugsAsString.Length + str.Length >= EmbedBuilder.MaxDescriptionLength)
                     {
