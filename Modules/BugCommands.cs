@@ -65,17 +65,47 @@ namespace BugrudoBot.Modules
             {
                 foreach (var bug in bugs)
                 {
-                    bugsAsString += $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} | Reported by: {bug.ReportedBy}``` {bug.Text}\n";
+                    var str = $"```{bug.ReportedOn.ToString("yyyy-MM-dd hh:mm tt")} | Reported by: {bug.ReportedBy}``` {bug.Text}\n";
+
+                    if (bugsAsString.Length + str.Length >= EmbedBuilder.MaxDescriptionLength)
+                    {
+                        break;
+                    }
+
+                    bugsAsString += str;
                 }
             }
 
-            embedBuilder.WithTitle("Perudobot bugs");
-            embedBuilder.WithDescription(bugsAsString);
+            embedBuilder
+                .WithTitle("Page 1")
+                .WithDescription(bugsAsString)
+                .WithFooter("Page turning is currently disabled due to technical difficulties");
 
             await Log(msg: new Discord.LogMessage(message: "Sending list to channel", severity: Discord.LogSeverity.Info, source: "bugs"));
-            await Context.Channel.SendMessageAsync("", false, embedBuilder.Build());
+            var message = await Context.Channel.SendMessageAsync("", false, embedBuilder.Build());
+
+            await message.AddReactionAsync(new Emoji("➡️"));
 
             await Log(msg: new Discord.LogMessage(message: "Exiting Bugs command", severity: Discord.LogSeverity.Info, source: "bugs"));
         }
+
+        // [Command("➡️")]
+        // public async Task NextPage()
+        // {
+        //     await Log(msg: new Discord.LogMessage(message: GetCurrentPage(Context.Message).ToString(), severity: Discord.LogSeverity.Info, source: "bugs"));
+        //     await Context.Channel.SendMessageAsync(GetCurrentPage(Context.Message).ToString());
+        // }
+
+        // private static int GetCurrentPage(IUserMessage message)
+        // {
+        //     var currentPage = 1;
+        //     if (message.Embeds.First().Title.Contains("Page"))
+        //     {
+        //         var pageText = message.Embeds.First().Title.Split("Page")[1];
+        //         currentPage = int.Parse(pageText);
+        //     }
+
+        //     return currentPage;
+        // }
     }
 }
