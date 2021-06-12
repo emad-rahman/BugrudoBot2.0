@@ -65,8 +65,8 @@ namespace BugrudoBot.Services
 
             if(message.MentionedUsers.Any(x => x.Username == _client.CurrentUser.Username))
             {
-                // await _commands.ExecuteAsync(context, "meme", _services);
-                await context.Channel.SendMessageAsync($"Hi, {context.User.Username} :)");
+                await _commands.ExecuteAsync(context, "bug", _services);
+                // await context.Channel.SendMessageAsync($"Hi, {context.User.Username} :)");
             }
 
             // determine if the message has a valid prefix, and adjust argPos based on prefix
