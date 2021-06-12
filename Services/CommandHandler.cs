@@ -65,7 +65,7 @@ namespace BugrudoBot.Services
 
             if(message.MentionedUsers.Any(x => x.Username == _client.CurrentUser.Username))
             {
-                await _commands.ExecuteAsync(context, "bug", _services);
+                await _commands.ExecuteAsync(context, "help", _services);
                 // await context.Channel.SendMessageAsync($"Hi, {context.User.Username} :)");
             }
 
