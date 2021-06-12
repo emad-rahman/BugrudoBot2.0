@@ -46,3 +46,4 @@ msbuild.wrn
 
 # project specific ignores
 appsettings.json
+*.db

@@ -7,6 +7,9 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BugrudoBot.Services;
+using BugrudoBot.Models;
+using Microsoft.EntityFrameworkCore;
+using BugrudoBot.Helpers;
 
 namespace BugrudoBot
 {
@@ -59,6 +62,8 @@ namespace BugrudoBot
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandler>()
+                .AddDbContext<ApplicationDbContext>(options => 
+                    options.UseSqlite(ConnectionStringHelper.GetConnectionString()))
                 .BuildServiceProvider();
         }
 
