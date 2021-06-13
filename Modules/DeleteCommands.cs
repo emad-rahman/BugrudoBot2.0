@@ -10,6 +10,7 @@ namespace BugrudoBot.Modules
     public class DeleteCommands : BaseCommands
     {
         private readonly ApplicationDbContext _db;
+
         public DeleteCommands(IServiceProvider services)
         {
             _db = services.GetRequiredService<ApplicationDbContext>();
@@ -28,17 +29,10 @@ namespace BugrudoBot.Modules
                 return;
             }
 
-            if (Context.User.Username.Equals("Emad"))
-            {
-                await Log(msg: new Discord.LogMessage(message: "Deleting bug", severity: Discord.LogSeverity.Info, source: "Delete"));
-                bug.Result.IsDeleted = true;
-                await _db.SaveChangesAsync();
-                await Context.Channel.SendMessageAsync($"Successfully deleted bug {bug.Result.Id}. Bug: {bug.Result.Text}");
-            }
-            else
-            {
-                await Context.Channel.SendMessageAsync("Sorry, you're not allowed to do that!");
-            }
+            await Log(msg: new Discord.LogMessage(message: "Deleting bug", severity: Discord.LogSeverity.Info, source: "Delete"));
+            bug.Result.IsDeleted = true;
+            await _db.SaveChangesAsync();
+            await Context.Channel.SendMessageAsync($"Successfully deleted bug {bug.Result.Id}. ```Bug: {bug.Result.Text}```");
 
             await Log(msg: new Discord.LogMessage(message: "Exiting Delete command", severity: Discord.LogSeverity.Info, source: "Delete"));
         }
